@@ -1,0 +1,47 @@
+AUTH v2.0 JSON data
+
+POST /v2.0/tokens HTTP/1.1
+Host: identity.api.openstack.org
+Content-Type: application/json
+Accept: application/json
+
+{
+    "auth": {
+        "tenantName": "demo",
+        "passwordCredentials": {
+            "username": "demo",
+            "password": "nomoresecrete"
+        }
+    }
+}
+
+AUTH v3.0 JSON Data
+
+POST /v3/auth/tokens
+
+{
+    "auth": {
+        "identity": {
+            "methods": [
+                "password"
+            ],
+            "password": {
+                "user": {
+                    "domain": {
+                        "id": "default"
+                    },
+                    "name": "my-username",
+                    "password": "my-password"
+                }
+            }
+        },
+        "scope": {
+            "project": {
+                "domain": {
+                    "id": "default"
+                },
+                "name": "project-x"
+            }
+        }
+    }
+}
