@@ -1,4 +1,0 @@
-The following libraries are used:
-
-wreq
-aeson
