@@ -10,7 +10,7 @@
 --
 -- A library for authentication with OpenStack Keystone
 --
--- These are the types and operations required for the
+-- These are the types required for the
 -- JSON auth requests.
 
 module Network.Keystone.Types (
