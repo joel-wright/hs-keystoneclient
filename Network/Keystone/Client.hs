@@ -43,4 +43,4 @@ getAuthToken a = do
     let
         id = r ^. responseBody . key "access" . key "token" . key "id" . _String
         in
-            return (id)
+            return id
