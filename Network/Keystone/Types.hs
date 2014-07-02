@@ -27,10 +27,10 @@ data KeystoneAuth = Auth KeystoneVersion KeystoneUser
 type KeystoneToken = Text
 
 data KeystoneUser = User {
-        username :: Text,
-        password :: Text,
-        tenant :: Text,
-        server :: Text
+        username :: String,
+        password :: String,
+        tenant :: String,
+        server :: String
     }
 
 data KeystoneVersion = V2 | V3

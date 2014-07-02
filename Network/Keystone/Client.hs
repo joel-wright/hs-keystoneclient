@@ -27,20 +27,19 @@ authToJSON :: KeystoneAuth -> Value
 authToJSON (Auth V2 u) =
     object [ "auth" .= authObj ]
         where
-            authObj = object [ "tenantName" .= (String (tenant u))
+            authObj = object [ "tenantName" .= (String $ pack $ tenant u)
                              , "passwordCredentials" .= pwdObj ]
-            pwdObj = object [ "username" .= (String (username u))
-                            , "password" .= (String (password u)) ]
-authToJSON (Auth V3 u) = object [] -- TODO
+            pwdObj = object [ "username" .= (String $ pack $ username u)
+                            , "password" .= (String $ pack $ password u) ]
+authToJSON (Auth V3 u) = object [] -- TODO if necessary
 
 authToTokenURL :: KeystoneAuth -> String
-authToTokenURL (Auth V2 u) = unpack $ append (server u) (pack "tokens")
-authToTokenURL (Auth V3 u) = "" -- TODO
+authToTokenURL (Auth V2 u) = (server u) ++ "tokens"
+authToTokenURL (Auth V3 u) = "" -- TODO if necessary
 
 getAuthToken :: KeystoneAuth -> IO KeystoneToken
 getAuthToken a = do
-    r <- post (authToTokenURL a) (authToJSON a)
-    let
-        id = r ^. responseBody . key "access" . key "token" . key "id" . _String
-        in
-            return id
+    r <- postWith opts (authToTokenURL a) (authToJSON a)
+    return $ r ^. responseBody . key "access" . key "token" . key "id" . _String
+    where
+        opts = defaults & header "Accept" .~ ["application/json"]
